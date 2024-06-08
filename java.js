@@ -1,31 +1,22 @@
-const slides = document.querySelectorAll('.slide');
-const prevButton = document.querySelector('.prev-button');
-const nextButton = document.querySelector('.next-button');
-let currentSlide = 0;
-let slideInterval = setInterval(nextSlide, 3000);
+const products = document.querySelectorAll('.product');
+const modal = document.querySelector('.modal');
+const modalImage = document.getElementById('modalImage');
+const closeBtn = document.querySelector('.close');
 
-function showSlide(index) {
-  slides[currentSlide].classList.remove('active');
-  currentSlide = (index + slides.length) % slides.length;
-  slides[currentSlide].classList.add('active');
-}
-
-function prevSlide() {
-  showSlide(currentSlide - 1);
-}
-
-function nextSlide() {
-  showSlide(currentSlide + 1);
-}
-
-prevButton.addEventListener('click', () => {
-  clearInterval(slideInterval);
-  prevSlide();
-  slideInterval = setInterval(nextSlide, 3000);
+products.forEach(product => {
+  product.addEventListener('click', () => {
+    const imgSrc = product.querySelector('img').getAttribute('src');
+    modalImage.setAttribute('src', imgSrc);
+    modal.style.display = 'block';
+  });
 });
 
-nextButton.addEventListener('click', () => {
-  clearInterval(slideInterval);
-  nextSlide();
-  slideInterval = setInterval(nextSlide, 3000);
+closeBtn.addEventListener('click', () => {
+  modal.style.display = 'none';
+});
+
+window.addEventListener('click', (event) => {
+  if (event.target === modal) {
+    modal.style.display = 'none';
+  }
 });
